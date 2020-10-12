@@ -10,16 +10,20 @@ import (
 
 // Config main config
 type Config struct {
-	URL   string `json:"url"`
-	Token string `json:"token"`
+	URL   string `json:"url,omitempty"`
+	Token string `json:"token,omitempty"`
 }
 
 // CreateConfig make a new config
 func CreateConfig() *Config {
-	return &Config{}
+	return &Config{
+		URL:   "",
+		Token: "",
+	}
 }
 
-type keycloak struct {
+// Keycloak plugin
+type Keycloak struct {
 	name   string
 	client *gocloak.Client
 	next   http.Handler
@@ -27,15 +31,15 @@ type keycloak struct {
 }
 
 // New makes a plugin instance
-func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
-	return &keycloak{
+func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
+	return &Keycloak{
 		name:   name,
 		next:   next,
 		config: config,
 	}, nil
 }
 
-func (k *keycloak) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+func (k *Keycloak) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	cookies := req.Cookies()
 	var token *string
 	for _, cookie := range cookies {
