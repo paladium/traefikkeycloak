@@ -2,3 +2,6 @@ displayName: Keycloak middleware
 summary: Verifies the request has valid keycloak cookie/header attached
 type: middleware
 import: github.com/paladium/traefik-keycloak
+testData:
+  URL: http://localhost:8080
+  Token: Auth-Token

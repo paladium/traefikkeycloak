@@ -1,5 +1,5 @@
-// Plugin_keycloak main package
-package plugin_keycloak
+// Package pluginkeycloak main package
+package pluginkeycloak
 
 import (
 	"context"
