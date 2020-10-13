@@ -1,5 +1,5 @@
-// Package pluginkeycloak main package
-package pluginkeycloak
+// Package traefikkeycloak main package
+package traefikkeycloak
 
 import (
 	"context"

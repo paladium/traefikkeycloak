@@ -1,4 +1,4 @@
-module github.com/paladium/traefik-keycloak
+module github.com/paladium/traefikkeycloak
 
 go 1.14
 
