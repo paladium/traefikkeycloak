@@ -4,54 +4,36 @@ package pluginkeycloak
 import (
 	"context"
 	"net/http"
-
-	"github.com/Nerzal/gocloak"
 )
 
-// Config main config
+// Config the plugin configuration.
 type Config struct {
-	URL   string `json:"url,omitempty"`
-	Token string `json:"token,omitempty"`
+	// ...
 }
 
-// CreateConfig make a new config
+// CreateConfig creates the default plugin configuration.
 func CreateConfig() *Config {
 	return &Config{
-		URL:   "",
-		Token: "",
+		// ...
 	}
 }
 
-// Keycloak plugin
-type Keycloak struct {
-	name   string
-	client *gocloak.Client
-	next   http.Handler
-	config *Config
+// Example a plugin.
+type Example struct {
+	next http.Handler
+	name string
+	// ...
 }
 
-// New makes a plugin instance
+// New created a new plugin.
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
-	return &Keycloak{
-		name:   name,
-		next:   next,
-		config: config,
+	// ...
+	return &Example{
+		// ...
 	}, nil
 }
 
-func (k *Keycloak) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	cookies := req.Cookies()
-	var token *string
-	for _, cookie := range cookies {
-		if cookie.Name == k.config.Token {
-			token = &cookie.Value
-			break
-		}
-	}
-	if token == nil {
-		res.WriteHeader(http.StatusForbidden)
-		return
-	}
-	//TODO Verify the token
-	k.next.ServeHTTP(res, req)
+func (e *Example) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+	// ...
+	e.next.ServeHTTP(rw, req)
 }
