@@ -3,7 +3,10 @@ package traefikkeycloak
 
 import (
 	"context"
+	"errors"
 	"net/http"
+
+	"github.com/Nerzal/gocloak"
 )
 
 // Config main config
@@ -25,20 +28,23 @@ func CreateConfig() *Config {
 }
 
 type keycloak struct {
-	name string
-	// client gocloak.GoCloak
+	name   string
+	client gocloak.GoCloak
 	next   http.Handler
 	config *Config
 }
 
 // New makes a plugin instance
 func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
-	// client := gocloak.NewClient(config.URL)
+	if config.URL == "" {
+		return nil, errors.New("The URL is required")
+	}
+	client := gocloak.NewClient(config.URL)
 	return &keycloak{
 		name:   name,
 		next:   next,
 		config: config,
-		// client: client,
+		client: client,
 	}, nil
 }
 
