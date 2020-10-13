@@ -5,3 +5,5 @@ import: github.com/paladium/traefikkeycloak
 testData:
   URL: http://localhost:8080
   Token: Auth-Token
+  Parsed-Token: Parsed-Token
+  Realm: master
