@@ -20,7 +20,12 @@ type Config struct {
 
 // CreateConfig make a new config
 func CreateConfig() *Config {
-	return &Config{}
+	return &Config{
+		URL:         "",
+		Token:       "",
+		Realm:       "",
+		ParsedToken: "",
+	}
 }
 
 type keycloak struct {

@@ -1,20 +1,22 @@
-package traefikkeycloak
+package traefikkeycloak_test
 
 import (
 	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/paladium/traefikkeycloak"
 )
 
 func Test_ServeHTTP(t *testing.T) {
-	config := CreateConfig()
+	config := traefikkeycloak.CreateConfig()
 	config.URL = "http://localhost:7070"
 	config.Token = "Auth-Token"
 	config.Realm = "dev"
 	config.ParsedToken = "Parsed-Token"
 	next := http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {})
-	handler, err := New(context.Background(), next, config, "keycloak-plugin")
+	handler, err := traefikkeycloak.New(context.Background(), next, config, "keycloak-plugin")
 	if err != nil {
 		t.Fatal(err)
 	}
