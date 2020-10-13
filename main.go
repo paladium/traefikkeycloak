@@ -4,9 +4,10 @@ package traefikkeycloak
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 
-	"github.com/Nerzal/gocloak"
+	"github.com/google/uuid"
 )
 
 // Config main config
@@ -28,8 +29,8 @@ func CreateConfig() *Config {
 }
 
 type keycloak struct {
-	name   string
-	client gocloak.GoCloak
+	name string
+	// client gocloak.GoCloak
 	next   http.Handler
 	config *Config
 }
@@ -39,12 +40,13 @@ func New(_ context.Context, next http.Handler, config *Config, name string) (htt
 	if config.URL == "" {
 		return nil, errors.New("The URL is required")
 	}
-	client := gocloak.NewClient(config.URL)
+	// client := gocloak.NewClient(config.URL)
+	fmt.Println(uuid.New().String())
 	return &keycloak{
 		name:   name,
 		next:   next,
 		config: config,
-		client: client,
+		// client: client,
 	}, nil
 }
 
